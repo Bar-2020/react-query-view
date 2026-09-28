@@ -193,6 +193,7 @@ describe('QueryView — resolveState', () => {
   });
 
   it('falls through when resolveState returns key with no matching slot', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     render(
       <QueryView
         query={pending}
@@ -201,6 +202,15 @@ describe('QueryView — resolveState', () => {
       />,
     );
     expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('"unknownKey"'));
+    warn.mockRestore();
+  });
+
+  it('does not warn when resolveState returns null', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<QueryView query={pending} resolveState={() => null} successElement={successEl} />);
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 
   it('evaluates resolveState before isPending check', () => {

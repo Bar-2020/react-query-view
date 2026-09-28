@@ -40,7 +40,7 @@ import { resolveIsNoData } from './utils';
  * // Custom states via resolveState
  * <QueryView
  *   query={query}
- *   resolveState={(q) => (q.isRefetchError ? 'refetchError' : null)}
+ *   resolveState={() => (query.isRefetchError ? 'refetchError' : null)}
  *   slots={{ refetchError: <RefetchErrorBanner /> }}
  *   successElement={(data) => <List items={data} />}
  * />
@@ -56,8 +56,16 @@ export const QueryView = <T,>({
   // Custom state — evaluated before all built-in checks.
   if (resolveState !== undefined) {
     const customKey = resolveState(query);
-    if (customKey !== null && slots !== undefined && slots[customKey] !== undefined) {
-      return slots[customKey];
+    if (customKey !== null) {
+      if (slots !== undefined && slots[customKey] !== undefined) {
+        return slots[customKey];
+      }
+      if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+        console.warn(
+          `[react-query-view] resolveState returned "${customKey}" but no matching slot was provided. ` +
+            'Falling through to the built-in states.',
+        );
+      }
     }
   }
 
