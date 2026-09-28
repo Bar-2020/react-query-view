@@ -58,8 +58,8 @@ Publishing to npm is automated by [`.github/workflows/release.yml`](./.github/wo
 
 Only needed once per repository, already done for `react-query-view` but documented here in case the package is ever forked or the token needs rotating:
 
-1. Create an npm **Automation** access token (npmjs.com → your avatar → *Access Tokens* → *Generate New Token* → *Automation*). Automation tokens work in CI without requiring interactive 2FA approval for each publish.
-2. Add it as a repository secret named `NPM_TOKEN` (GitHub repo → *Settings* → *Secrets and variables* → *Actions* → *New repository secret*).
+1. Create an npm **Automation** access token (npmjs.com → your avatar → _Access Tokens_ → _Generate New Token_ → _Automation_). Automation tokens work in CI without requiring interactive 2FA approval for each publish.
+2. Add it as a repository secret named `NPM_TOKEN` (GitHub repo → _Settings_ → _Secrets and variables_ → _Actions_ → _New repository secret_).
 3. `publishConfig.provenance` is already set to `true` in `package.json`, and `release.yml` grants the workflow `id-token: write`, which is what npm needs to attach a provenance attestation. No extra npm-side configuration is required for a public package.
 4. First publish of a new package name must be done manually once (`npm publish` from a maintainer's machine, logged in with `npm login`) if the name isn't already registered — after that, the automated workflow can publish subsequent versions.
 
@@ -78,6 +78,6 @@ Prefer fixing the workflow and tagging normally whenever possible, so releases s
 
 [`.github/workflows/deploy-pages.yml`](./.github/workflows/deploy-pages.yml) builds [`examples/`](./examples) and deploys it to GitHub Pages on every push to `main` that touches `src/`, `examples/`, or the workflow itself (also runnable manually from the Actions tab).
 
-One-time repository setup (already done for `react-query-view`): under *Settings → Pages → Build and deployment*, set **Source** to **GitHub Actions**. No `gh-pages` branch or extra secrets are needed — the workflow uses GitHub's official `actions/deploy-pages` action with the repository's built-in `GITHUB_TOKEN`.
+One-time repository setup (already done for `react-query-view`): under _Settings → Pages → Build and deployment_, set **Source** to **GitHub Actions**. No `gh-pages` branch or extra secrets are needed — the workflow uses GitHub's official `actions/deploy-pages` action with the repository's built-in `GITHUB_TOKEN`.
 
 The site is served at `https://bar-2020.github.io/react-query-view/`; `examples/vite.config.ts` sets the matching Vite `base` path for both the production build and `npm run preview`.
