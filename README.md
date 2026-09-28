@@ -83,6 +83,22 @@ export function UserList() {
 }
 ```
 
+## Examples
+
+**[Live demo →](https://bar-2020.github.io/react-query-view/)**
+
+An interactive version of every recipe below, deployed to GitHub Pages from [`examples/`](./examples). Each demo has buttons to flip the underlying query between loading, error, empty and success so you can see `QueryView` react in real time, plus a "View source" toggle with the exact code.
+
+Run it locally:
+
+```bash
+npm install
+npm run build      # examples import the built dist/ output
+cd examples
+npm install
+npm run dev
+```
+
 ## How states are resolved
 
 `QueryView` checks the query in a fixed order and renders the first match:
@@ -251,7 +267,7 @@ npm run typecheck # tsc
 npm run build     # build ESM + CJS + type declarations into dist/
 ```
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details, including how [releases are published to npm](./CONTRIBUTING.md#releasing-maintainers) and how the [examples site is deployed](./CONTRIBUTING.md#deploying-the-examples-site).
 
 ## License
 

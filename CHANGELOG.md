@@ -13,6 +13,8 @@ and this project follows [Semantic Versioning](https://semver.org/).
 ### Added
 
 - Development warning when `resolveState` returns a key with no matching slot.
+- Live, interactive examples app (`examples/`) covering every recipe in the README, deployed to GitHub Pages on every push to `main`.
+- Documentation for publishing releases to npm and deploying the examples site, in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## [0.1.0] - 2026-09-28
 
