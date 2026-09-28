@@ -47,7 +47,7 @@ If you change the public API, add or update the relevant example so the live dem
 
 ## Releasing (maintainers)
 
-Publishing to npm is automated by [`.github/workflows/release.yml`](./.github/workflows/release.yml): pushing a `v*` tag builds the package and runs `npm publish` with [provenance](https://docs.npmjs.com/generating-provenance-statements) from GitHub Actions' OIDC token, then creates a matching GitHub release. In practice, a release is just:
+Publishing to npm is automated by [`.github/workflows/release.yml`](./.github/workflows/release.yml): pushing a `v*` tag builds the package and runs `npm publish` using [Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (npm exchanges the workflow's OIDC token for a short-lived publish token — no secret involved), which also attaches [provenance](https://docs.npmjs.com/generating-provenance-statements), then creates a matching GitHub release. In practice, a release is just:
 
 1. Move the `Unreleased` changelog entries under a new version heading in [CHANGELOG.md](./CHANGELOG.md).
 2. `npm version <patch|minor|major>` — bumps `package.json` and creates a `vX.Y.Z` git tag.
@@ -56,12 +56,17 @@ Publishing to npm is automated by [`.github/workflows/release.yml`](./.github/wo
 
 ### One-time npm publishing setup
 
-Only needed once per repository, already done for `react-query-view` but documented here in case the package is ever forked or the token needs rotating:
+Only needed once per repository. npm's Trusted Publisher configuration lives on the package's own npmjs.com page, which doesn't exist until the package has been published at least once — so for a brand-new package name, this is unavoidably a two-step bootstrap:
 
-1. Create an npm **Automation** access token (npmjs.com → your avatar → _Access Tokens_ → _Generate New Token_ → _Automation_). Automation tokens work in CI without requiring interactive 2FA approval for each publish.
-2. Add it as a repository secret named `NPM_TOKEN` (GitHub repo → _Settings_ → _Secrets and variables_ → _Actions_ → _New repository secret_).
-3. `publishConfig.provenance` is already set to `true` in `package.json`, and `release.yml` grants the workflow `id-token: write`, which is what npm needs to attach a provenance attestation. No extra npm-side configuration is required for a public package.
-4. First publish of a new package name must be done manually once (`npm publish` from a maintainer's machine, logged in with `npm login`) if the name isn't already registered — after that, the automated workflow can publish subsequent versions.
+1. **Publish once, manually**, from a maintainer's machine: `npm login` (completes in your browser), then `npm publish` from a checkout with the version you're releasing. This registers the package and makes you its owner. `prepublishOnly` runs lint, typecheck, tests and the build first.
+2. **Configure Trusted Publishing** on npmjs.com: the package's page → **Settings** → **Trusted Publisher** → **GitHub Actions**, and fill in:
+   - Organization or user: `Bar-2020`
+   - Repository: `react-query-view`
+   - Workflow filename: `release.yml`
+   - Environment name: leave blank (the workflow doesn't use one)
+3. From then on, `release.yml` needs no secret at all: `id-token: write` (already granted) lets it request an OIDC token, and npm exchanges that for a publish token because of the trusted publisher link above. `publishConfig.provenance: true` in `package.json` means every publish is still provenance-attested.
+
+If the `NPM_TOKEN` repository secret exists from before this was set up, it's no longer used and can be deleted.
 
 ### Publishing manually (fallback)
 
