@@ -6,6 +6,8 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-28
+
 ### Fixed
 
 - `createQueryView`: passing an explicit `undefined` for a built-in slot no longer discards the factory node.
@@ -26,5 +28,6 @@ and this project follows [Semantic Versioning](https://semver.org/).
 - Accessible default nodes: `DefaultPendingNode`, `DefaultErrorNode`, `DefaultNoDataNode`.
 - `defaultIsNoData` and `resolveIsNoData` utilities.
 
-[Unreleased]: https://github.com/Bar-2020/react-query-view/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Bar-2020/react-query-view/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Bar-2020/react-query-view/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Bar-2020/react-query-view/releases/tag/v0.1.0
