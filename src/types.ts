@@ -75,7 +75,11 @@ export interface QueryViewProps<T> {
    * to that slot, or `null` to fall through to the default flow.
    *
    * @example
-   * resolveState={() => (myQuery.isRefetchError ? 'refetchError' : null)}
+   * resolveState={(query) => {
+   *   const full = query as typeof myQuery;
+   *   if (full.isRefetchError) return 'refetchError';
+   *   return null;
+   * }}
    * slots={{ refetchError: <RefetchErrorBanner /> }}
    */
   resolveState?: ResolveStateFn<T>;

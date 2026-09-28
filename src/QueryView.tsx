@@ -40,7 +40,7 @@ import { resolveIsNoData } from './utils';
  * // Custom states via resolveState
  * <QueryView
  *   query={query}
- *   resolveState={() => (query.isRefetchError ? 'refetchError' : null)}
+ *   resolveState={(query) => (query.isRefetchError ? 'refetchError' : null)}
  *   slots={{ refetchError: <RefetchErrorBanner /> }}
  *   successElement={(data) => <List items={data} />}
  * />
