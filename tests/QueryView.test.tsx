@@ -33,7 +33,13 @@ const success: NarrowedUseQueryResult<string[]> = {
   isError: false,
 };
 
-const successEl = (data: string[]) => <ul>{data.map((d) => <li key={d}>{d}</li>)}</ul>;
+const successEl = (data: string[]) => (
+  <ul>
+    {data.map((d) => (
+      <li key={d}>{d}</li>
+    ))}
+  </ul>
+);
 
 describe('QueryView — built-in states', () => {
   it('renders default pending node when isPending', () => {
@@ -138,9 +144,7 @@ describe('QueryView — slotProps', () => {
 
 describe('QueryView — isNoData prop', () => {
   it('treats non-empty array as no data when isNoData=true', () => {
-    render(
-      <QueryView query={success} isNoData={true} successElement={successEl} />,
-    );
+    render(<QueryView query={success} isNoData={true} successElement={successEl} />);
     expect(screen.getByText('No data')).toBeInTheDocument();
   });
 
@@ -182,25 +186,25 @@ describe('QueryView — resolveState', () => {
   });
 
   it('falls through when resolveState returns null', () => {
-    render(
-      <QueryView
-        query={errored}
-        resolveState={() => null}
-        successElement={successEl}
-      />,
-    );
+    render(<QueryView query={errored} resolveState={() => null} successElement={successEl} />);
     expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 
   it('falls through when resolveState returns key with no matching slot', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     render(
-      <QueryView
-        query={pending}
-        resolveState={() => 'unknownKey'}
-        successElement={successEl}
-      />,
+      <QueryView query={pending} resolveState={() => 'unknownKey'} successElement={successEl} />,
     );
     expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('"unknownKey"'));
+    warn.mockRestore();
+  });
+
+  it('does not warn when resolveState returns null', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<QueryView query={pending} resolveState={() => null} successElement={successEl} />);
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 
   it('evaluates resolveState before isPending check', () => {

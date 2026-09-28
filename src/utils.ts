@@ -5,9 +5,7 @@ import type { IsNoDataProp } from './types';
  * Default predicate: returns `true` when data is `null`, `undefined`, or an empty array.
  */
 export const defaultIsNoData = <T>(data: T): boolean =>
-  data === null ||
-  data === undefined ||
-  (Array.isArray(data) && data.length === 0);
+  data === null || data === undefined || (Array.isArray(data) && data.length === 0);
 
 /**
  * Resolves the effective "is no data" result for a given piece of query data.

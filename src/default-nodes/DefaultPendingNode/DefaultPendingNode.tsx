@@ -14,14 +14,6 @@ const containerStyle: CSSProperties = {
   textAlign: 'center',
 };
 
-const titleStyle: CSSProperties = {
-  fontSize: '14px',
-  fontWeight: 500,
-  color: '#6b7280',
-  margin: 0,
-  fontFamily: 'inherit',
-};
-
 const srOnlyStyle: CSSProperties = {
   position: 'absolute',
   width: '1px',

@@ -35,6 +35,10 @@ import { resolveFactorySlot } from './utils';
 export function createQueryView(config: CreateQueryViewConfig) {
   const ConfiguredQueryView = <T,>(props: QueryViewProps<T>): ReactNode => {
     const mergedSlots: QueryViewSlots = {
+      // Forward any custom slot keys (used with resolveState) unchanged.
+      // Spread first so an explicit `undefined` for a built-in key cannot
+      // wipe out the factory node resolved below.
+      ...props.slots,
       pending:
         props.slots?.pending !== undefined
           ? props.slots.pending
@@ -47,8 +51,6 @@ export function createQueryView(config: CreateQueryViewConfig) {
         props.slots?.noData !== undefined
           ? props.slots.noData
           : resolveFactorySlot(config.noData, props.slotProps?.noData),
-      // Forward any custom slot keys (used with resolveState) unchanged.
-      ...props.slots,
     };
 
     return <QueryView {...props} slots={mergedSlots} />;

@@ -82,6 +82,31 @@ describe('createQueryView — per-render slots override factory', () => {
     expect(screen.queryByText('factory pending')).not.toBeInTheDocument();
   });
 
+  it('keeps the factory node when a per-render slot is explicitly undefined', () => {
+    const MyView = createQueryView({ pending: <div>factory pending</div> });
+    render(
+      <MyView
+        query={pending}
+        slots={{ pending: undefined }}
+        successElement={(d) => <span>{d}</span>}
+      />,
+    );
+    expect(screen.getByText('factory pending')).toBeInTheDocument();
+  });
+
+  it('forwards custom slot keys for use with resolveState', () => {
+    const MyView = createQueryView({ pending: <div>factory pending</div> });
+    render(
+      <MyView
+        query={pending}
+        resolveState={() => 'maintenance'}
+        slots={{ maintenance: <div>down for maintenance</div> }}
+        successElement={(d) => <span>{d}</span>}
+      />,
+    );
+    expect(screen.getByText('down for maintenance')).toBeInTheDocument();
+  });
+
   it('falls back to built-in default when neither factory nor per-render slot set', () => {
     const MyView = createQueryView({});
     render(<MyView query={errored} successElement={(d) => <span>{d}</span>} />);
