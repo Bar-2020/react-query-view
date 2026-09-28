@@ -7,7 +7,7 @@ import { CustomEmptyCheck } from './examples/CustomEmptyCheck';
 import { CustomResolveState } from './examples/CustomResolveState';
 
 const TABS = [
-  { id: 'quick-start', label: 'Quick start', Component: QuickStart },
+  { id: 'quick-start', label: 'Basics', Component: QuickStart },
   { id: 'slot-props', label: 'Custom text', Component: CustomSlotProps },
   { id: 'replace-slots', label: 'Replace a node', Component: ReplaceSlots },
   { id: 'app-defaults', label: 'App-wide defaults', Component: AppWideDefaults },
@@ -51,6 +51,8 @@ export function App() {
       <main>
         <ActiveExample />
       </main>
+
+      <footer className="app-footer">© Bar Almog 2026</footer>
     </div>
   );
 }
