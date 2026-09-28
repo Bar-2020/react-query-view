@@ -12,7 +12,7 @@ export function QuickStart() {
 
   return (
     <section>
-      <h2>Quick start</h2>
+      <h2>Basics</h2>
       <p>
         The minimal setup: pass a <code>query</code> and a <code>successElement</code>.{' '}
         <code>QueryView</code> picks the right node automatically.

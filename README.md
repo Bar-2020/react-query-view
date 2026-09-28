@@ -17,6 +17,22 @@
 - **Accessible defaults.** `role="status"` for loading and empty, `role="alert"` for errors, screen-reader text for the spinner.
 - **Tiny and dependency free.** About 2 kB gzipped, no CSS to import, tree-shakeable ESM and CJS builds.
 
+## Examples
+
+**[Live demo →](https://bar-2020.github.io/react-query-view/)**
+
+An interactive version of every recipe below, deployed to GitHub Pages from [`examples/`](./examples). Each demo has buttons to flip the underlying query between loading, error, empty and success so you can see `QueryView` react in real time, plus a "View source" toggle with the exact code.
+
+Run it locally:
+
+```bash
+npm install
+npm run build      # examples import the built dist/ output
+cd examples
+npm install
+npm run dev
+```
+
 ## Why
 
 **Before**
@@ -81,22 +97,6 @@ export function UserList() {
     />
   );
 }
-```
-
-## Examples
-
-**[Live demo →](https://bar-2020.github.io/react-query-view/)**
-
-An interactive version of every recipe below, deployed to GitHub Pages from [`examples/`](./examples). Each demo has buttons to flip the underlying query between loading, error, empty and success so you can see `QueryView` react in real time, plus a "View source" toggle with the exact code.
-
-Run it locally:
-
-```bash
-npm install
-npm run build      # examples import the built dist/ output
-cd examples
-npm install
-npm run dev
 ```
 
 ## How states are resolved
